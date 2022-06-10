@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title>Projet-Ziem</title>
+    <style type="text.css">
+        html, body {
+            font: 16pt arial;
+        }
+
+        #viz {
+            width: 900px;
+            height: 700px;
+            border: 1px solid lightgray;
+            font: 22pt arial;
+        }
+        </style>
+    <script src="https://unpkg.com/neovis.js@2.0.0-alpha.7"></script>
+
+</head>
+<script type="text/javascript">
+    let neoViz;
+    function draw() {
+        const config = {
+            containerId: 'viz',
+            neo4j: {
+                serverUrl: "bolt://localhost:7687",
+                serverUser: "neo4j",
+                serverPassword: "s3cr3t",
+            },
+            visConfig: {
+                nodes: {
+                },
+                edges: {
+                    arrows: {
+                        to: { enabled: true }
+                    }
+                },
+            },
+
+            labels: {
+                Host: {
+                    label: "ip",
+                    group: 'type_connection',
+                    // sizeCypher: "MATCH (n) WHERE id(n) = $id MATCH (n)-[r]-() RETURN sum(r.count) AS c",
+                    [NeoVis.NEOVIS_ADVANCED_CONFIG]: {
+                        cypher: {
+                            value: 'MATCH (n) WHERE id(n) = $id MATCH (n)-[r]-() RETURN sum(r.count) AS c',
+                        },
+                        function: {
+                            title: NeoVis.objectToTitleHtml,
+                        },
+                    }
+
+                }
+            },
+            relationships: {
+                TO: {
+                    value: "count",
+                    community: "type_connection"
+                }
+
+            },
+            arrows: true,
+            initialCypher: "MATCH p=()-[r:TO]-> () MATCH (n) RETURN p,n;"
+
+
+        };
+        var neoViz = new NeoVis.default(config);
+
+        neoViz.render();
+    }
+</script>
+
+<body onload="draw()">
+    <div id="viz"></div>
+</body>
+
+</html>
