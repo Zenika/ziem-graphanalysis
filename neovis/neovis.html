@@ -41,16 +41,6 @@
                 Host: {
                     label: "ip",
                     group: 'type_connection',
-                    // sizeCypher: "MATCH (n) WHERE id(n) = $id MATCH (n)-[r]-() RETURN sum(r.count) AS c",
-                    [NeoVis.NEOVIS_ADVANCED_CONFIG]: {
-                        cypher: {
-                            value: 'MATCH (n) WHERE id(n) = $id MATCH (n)-[r]-() RETURN sum(r.count) AS c',
-                        },
-                        function: {
-                            title: NeoVis.objectToTitleHtml,
-                        },
-                    }
-
                 }
             },
             relationships: {
@@ -61,7 +51,7 @@
 
             },
             arrows: true,
-            initialCypher: "MATCH p=()-[r:TO]-> () MATCH (n) RETURN p,n;"
+            initialCypher: "MATCH p=()-[r:TO]-> () RETURN p;"
 
 
         };
