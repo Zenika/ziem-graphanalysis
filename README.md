@@ -5,3 +5,9 @@ The project collects network traffic in a Kafka cluster where data is processed 
 The architecture looks like :
 
 ![Architecture diagram](./img/ziem-graphanalysis-archi.png)
+
+# Screenshots
+
+# How it works ?
+
+# Links
