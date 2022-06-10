@@ -8,7 +8,7 @@ The architecture looks like :
 
 # Screenshots
 
-![Neovis visualisation](./img/screenshot_V1.png
+![Neovis visualisation](./img/screenshot_V1.png)
 
 
 # How it works ?
