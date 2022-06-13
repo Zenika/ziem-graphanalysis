@@ -11,7 +11,7 @@ The architecture looks like :
 ![Neovis visualisation](./img/screenshot_V1.png)
 
 
-# How does it works ?
+# How does it work ?
 
 Network packets are collected in Kafka then processed with a few ksqlDB scripts to extract
 source and destination IP and count the number of packets.
