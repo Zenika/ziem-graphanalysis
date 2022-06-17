@@ -13,11 +13,11 @@ The architecture looks like :
 
 # How does it work ?
 
-Network packets are collected in Kafka then processed with a few ksqlDB scripts to extract
+Network packets are collected in Kafka by the ZIEM platform. Data is then processed by a few ksqlDB scripts (see [here](https://github.com/Zenika/ziem-graphanalysis/tree/main/ksql)) to extract
 source and destination IP and count the number of packets.
 
-Then a Neo4j Sink Connector reads data from the output topic and send the data to a neo4j instance. Thus data can be viewed and queried in Neo4j browser, but also with neovis.js and give 
-the nice visualization above.
+Then a Neo4j Sink Connector reads data from the output topic and send the data to a neo4j instance. Thus data can be viewed and queried in Neo4j browser.
+A Cypher query helps colouring the nodes and edges by origin (if it's internal or external). An HTML page using neovis.js gives the nice visualization above.
 
 # Links
 
