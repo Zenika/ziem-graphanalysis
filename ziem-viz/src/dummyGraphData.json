@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "id": "10.132.16.1",
+      "name": "test1",
+      "group": "group1",
+      "value": 5
+    },
+    {
+      "id": "10.132.16.2",
+      "name": "test2",
+      "group": "group1",
+      "value": 1
+    },
+    {
+      "id": "10.132.16.3",
+      "name": "test3",
+      "group": "group3",
+      "value": 15
+    },
+    {
+      "id": "10.132.16.4",
+      "name": "test4",
+      "group": "group2",
+      "value": 2
+    },
+    {
+      "id": "10.132.16.5",
+      "name": "test5",
+      "group": "group2",
+      "value": 3
+    }
+  ],
+  "links": [
+    {
+      "source": "10.132.16.1",
+      "target": "10.132.16.2",
+      "value": 4
+    },
+    {
+      "source": "10.132.16.2",
+      "target": "10.132.16.4",
+      "value": 7
+    },
+    {
+      "source": "10.132.16.2",
+      "target": "10.132.16.3",
+      "value": 11
+    },
+    {
+      "source": "10.132.16.5",
+      "target": "10.132.16.1"
+    },
+    {
+      "source": "10.132.16.3",
+      "target": "10.132.16.1"
+    }
+  ]
+}
