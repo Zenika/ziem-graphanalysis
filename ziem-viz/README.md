@@ -2,12 +2,12 @@
 
 ## Creating a neo4j database and a user.
 
-You need to run a Neo4j bolt database on the default url localhost:7687 then configure a file src/config.json with the fields in order to connect to the database :
+You need to run a Neo4j bolt database on the default url localhost:7687. Then configure a file src/config.json with the fields :
 
-{
-  "NEO4J_SERVER_URL": "bolt://localhost:7687",
-  "NEO4J_CLIENT_ID": "yourUserId",
-  "NEO4J_CLIENT_PWD": "yourUserPwd"
+{  
+  "NEO4J_SERVER_URL": "bolt://localhost:7687",  
+  "NEO4J_CLIENT_ID": "yourUserId",   
+  "NEO4J_CLIENT_PWD": "yourUserPwd"  
 }
 
 This user needs to be able to have the permissions of the publisher role (see neo4j default roles).
