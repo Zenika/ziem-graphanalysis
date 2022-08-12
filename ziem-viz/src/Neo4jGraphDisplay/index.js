@@ -16,6 +16,7 @@ import {
 import NodeListItem from "../NodeListItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SearchIcon from "@mui/icons-material/Search";
+import LinkListItem from "../LinkListItem";
 
 const DEFAULT_GRAPH_PARAMETERS = {
   curvature: 0.2,
@@ -147,17 +148,10 @@ export default function Neo4jGraphDisplay() {
           links[[link.start.identity.toNumber(), link.end.identity.toNumber()]] = wrapLink
         }
 
-        // Initializing cross node references
-        if (nodes[nodeStartId].outLinks[nodeEndId]) {
-          nodes[nodeStartId].outLinks[nodeEndId].count += 1;
-          nodes[nodeStartId].outLinks[nodeEndId].details.push(currentLink);
-        } else {
+        if (!nodes[nodeStartId].outLinks[nodeEndId]) {
           nodes[nodeStartId].outLinks[nodeEndId] = wrapLink;
         }
-        if (nodes[nodeEndId].inLinks[nodeStartId]) {
-          nodes[nodeEndId].inLinks[nodeStartId].count += 1;
-          nodes[nodeEndId].inLinks[nodeStartId].details.push(currentLink);
-        } else {
+        if (!nodes[nodeEndId].inLinks[nodeStartId]) {
           nodes[nodeEndId].inLinks[nodeStartId] = wrapLink;
         }
       });
@@ -336,6 +330,7 @@ export default function Neo4jGraphDisplay() {
           newSelectedNodes[link.target.identity] = link.target;
           setSelectedNodes(newSelectedNodes);
         }
+        console.log(link)
         return newList;
       });
     },
@@ -453,7 +448,7 @@ export default function Neo4jGraphDisplay() {
           <Box
             sx={{
               overflow: "auto",
-              maxHeight: "400px",
+              maxHeight: "350px",
             }}
           >
             <Typography>Selected Nodes</Typography>
@@ -494,6 +489,19 @@ export default function Neo4jGraphDisplay() {
           >
             Focus on
           </Button>
+          <Box
+            sx={{
+              overflow: "auto",
+              maxHeight: "350px",
+            }}
+          >
+            <Typography>Selected Links</Typography>
+            <List>
+              {Object.values(selectedLinks).map((link) => (
+                <LinkListItem key={link.identity} link={link} />
+              ))}
+            </List>
+          </Box>
         </Stack>
       </Box>
       <Box

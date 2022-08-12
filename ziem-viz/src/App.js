@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import "./App.css";
 import Neo4jContextProvider from "./Neo4jContextProvider";
 import Neo4jGraphDisplay from "./Neo4jGraphDisplay";
-import NeovisDisplay from "./NeovisDisplay";
+// import NeovisDisplay from "./NeovisDisplay";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <Box sx={{ marginBottom: "10px" }}>
             <Neo4jGraphDisplay />
           </Box>
-          <NeovisDisplay />
+          {/* <NeovisDisplay /> */}
         </Neo4jContextProvider>
       </header>
     </div>

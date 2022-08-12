@@ -2,6 +2,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Collapse,
   Grid,
+  List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -9,6 +10,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
+import LinkDetailListItem from "../LinkDetailsListItem";
+import { Box } from "@mui/system";
 
 export default function LinkListItem({ link, isOutgoing = true }) {
   const [open, setOpen] = useState(false);
@@ -33,16 +36,20 @@ export default function LinkListItem({ link, isOutgoing = true }) {
           sx={{ textAlign: "left", paddingLeft: "25%" }}
         >
           <Grid item sm={3}>
-            <Typography>type</Typography>
-          </Grid>
-          <Grid item sm={3}>
-            <Typography>{link?.type}</Typography>
-          </Grid>
-          <Grid item sm={3}>
             <Typography>count</Typography>
           </Grid>
           <Grid item sm={3}>
             <Typography>{link?.count}</Typography>
+          </Grid>
+          <Grid item sm={6}>
+            <Box>
+              <Typography>details</Typography>
+              <List>
+                {Object.values(link.details).map((detail) => (
+                  <LinkDetailListItem key={detail.identity} link={detail} />
+                ))}
+              </List>
+            </Box>
           </Grid>
         </Grid>
       </Collapse>
