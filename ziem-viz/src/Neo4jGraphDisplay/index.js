@@ -124,26 +124,61 @@ export default function Neo4jGraphDisplay() {
 
         // Initializing and adding links to set
         const identity = link.relationship.identity.toNumber();
-        const count = link.relationship.properties.count.toNumber();
-        links[identity] = {
+        const createdAt = link.relationship.properties.created_at;
+        const currentLink = {
           identity: identity,
           type: link.relationship.type,
-          count: count,
+          createdAt: createdAt,
           source: nodes[link.start.identity.toNumber()],
           target: nodes[link.end.identity.toNumber()],
+        }
+        const wrapLink = {
+          source: nodes[link.start.identity.toNumber()],
+          target: nodes[link.end.identity.toNumber()],
+          count: 1,
+          identity: identity,
+          details: [currentLink]
         };
 
-        // Initializing cross node references
-        nodes[nodeStartId].outLinks[nodeEndId] = links[identity];
-        nodes[nodeEndId].inLinks[nodeStartId] = links[identity];
+        if (links[[link.start.identity.toNumber(), link.end.identity.toNumber()]]) {
+          links[[link.start.identity.toNumber(), link.end.identity.toNumber()]].count += 1;
+          links[[link.start.identity.toNumber(), link.end.identity.toNumber()]].details.push(currentLink)
+        } else {
+          links[[link.start.identity.toNumber(), link.end.identity.toNumber()]] = wrapLink
+        }
 
-        // Finding minimum and maximum count
-        if (count > countBoundRange.max) {
-          countBoundRange.max = count;
-        } else if (count < countBoundRange.min) {
-          countBoundRange.min = count;
+        // Initializing cross node references
+        if (nodes[nodeStartId].outLinks[nodeEndId]) {
+          nodes[nodeStartId].outLinks[nodeEndId].count += 1;
+          nodes[nodeStartId].outLinks[nodeEndId].details.push(currentLink);
+        } else {
+          nodes[nodeStartId].outLinks[nodeEndId] = wrapLink;
+        }
+        if (nodes[nodeEndId].inLinks[nodeStartId]) {
+          nodes[nodeEndId].inLinks[nodeStartId].count += 1;
+          nodes[nodeEndId].inLinks[nodeStartId].details.push(currentLink);
+        } else {
+          nodes[nodeEndId].inLinks[nodeStartId] = wrapLink;
         }
       });
+
+      Object.values(nodes).forEach((node) => {
+        Object.values(node.outLinks).forEach((link) => {
+          if (link.count > countBoundRange.max) {
+            countBoundRange.max = link.count;
+          } else if (link.count < countBoundRange.min) {
+            countBoundRange.min = link.count;
+          }
+        });
+        Object.values(node.inLinks).forEach((link) => {
+          if (link.count > countBoundRange.max) {
+            countBoundRange.max = link.count;
+          } else if (link.count < countBoundRange.min) {
+            countBoundRange.min = link.count;
+          }
+        });
+      });
+
       // Computing particle speed for each link
       Object.values(links).forEach((link) => {
         link.particleSpeed = computeParticleSpeedForLink(
@@ -192,8 +227,8 @@ export default function Neo4jGraphDisplay() {
       ctx.textAlign = "center";
       const alphaColor =
         !Object.values(selectedNodes).length ||
-        selectedNodes[node.identity] ||
-        isNodeNeighbourWithinSet(node, selectedNodes)
+          selectedNodes[node.identity] ||
+          isNodeNeighbourWithinSet(node, selectedNodes)
           ? 1
           : graphParameters.exteriorNodeOpacity;
       ctx.fillStyle = addAlpha(node.color, alphaColor);
