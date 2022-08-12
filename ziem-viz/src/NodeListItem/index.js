@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Collapse,
-  debounce,
   Grid,
   Input,
   ListItemButton,
@@ -17,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import LinksList from "../LinkList";
 import SelectCheckmarks from "../SelectCheckmarks";
 import useNeo4jQuery from "../useNeo4jQuery";
+import { debounce } from "lodash";
 
 const labelsOptions = ["Host", "Attacker", "Compromised"];
 
@@ -42,8 +42,6 @@ export default function NodeListItem({ node }) {
   const [open, setOpen] = useState(false);
   const [labels, setLabels] = useState(node.labels);
   const ref = useRef();
-
-  debounce(() => console.log("ayaya debounce"), 1000)();
 
   useEffect(() => {
     ref.current &&
@@ -121,7 +119,7 @@ export default function NodeListItem({ node }) {
               fullWidth
               maxRows={3}
               placeholder="Free text"
-              onChange={(event) => console.log(event.target.value)}
+              onChange={debounce((event) => console.log(event.target.value), 1000)}
             />
           </Grid>
           <Grid item sm={6}>
