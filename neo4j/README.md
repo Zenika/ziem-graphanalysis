@@ -28,3 +28,7 @@ MATCH (n:`UNIQUE IMPORT LABEL`)  WITH n LIMIT 20000 REMOVE n:`UNIQUE IMPORT LABE
 DROP CONSTRAINT ON (node:`UNIQUE IMPORT LABEL`) ASSERT (node.`UNIQUE IMPORT ID`) IS UNIQUE;
 :commit
 ```
+
+## Sample data with Timeseries (Cypher script)
+
+See [sample-timeseries.cypher](sample-timeseries.cypher) (19 hosts, 3000 relationships).
