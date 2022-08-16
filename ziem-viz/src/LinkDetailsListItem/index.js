@@ -11,6 +11,10 @@ import moment from "moment";
 
 export default function LinkDetailListItem({ link }) {
   const [open, setOpen] = useState(false);
+  //TODO : Régler le problème de la date UTC.
+  console.log(moment(link?.createdAt))
+  console.log(moment(Date.UTC(link?.createdAt)))
+  console.log(new Date(link?.createdAt).setUTCHours())
   const handleClick = () => {
     setOpen(!open);
   };
@@ -37,7 +41,7 @@ export default function LinkDetailListItem({ link }) {
             <Typography>createdAt</Typography>
           </Grid>
           <Grid item sm={3}>
-            <Typography>{moment(link?.createdAt).format("DD MM YYYY hh:mm:ss")}</Typography>
+            <Typography>{new Date(link?.createdAt).toLocaleString()}</Typography>
           </Grid>          
         </Grid>
       </Collapse>

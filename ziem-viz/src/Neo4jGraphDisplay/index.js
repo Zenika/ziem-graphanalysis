@@ -126,6 +126,7 @@ export default function Neo4jGraphDisplay() {
         // Initializing and adding links to set
         const identity = link.relationship.identity.toNumber();
         const createdAt = link.relationship.properties.created_at;
+        console.log(createdAt)
         const currentLink = {
           identity: identity,
           type: link.relationship.type,
@@ -330,7 +331,6 @@ export default function Neo4jGraphDisplay() {
           newSelectedNodes[link.target.identity] = link.target;
           setSelectedNodes(newSelectedNodes);
         }
-        console.log(link)
         return newList;
       });
     },
