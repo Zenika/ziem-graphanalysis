@@ -13,7 +13,6 @@ function App() {
           <Box sx={{ marginBottom: "10px" }}>
             <Neo4jGraphDisplay />
           </Box>
-          {/* <NeovisDisplay /> */}
         </Neo4jContextProvider>
       </header>
     </div>

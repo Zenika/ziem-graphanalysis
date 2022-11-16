@@ -23,6 +23,10 @@ const DEFAULT_GRAPH_PARAMETERS = {
   particleSpeedRange: [0.005, 0.03],
   exteriorNodeOpacity: 0.2,
   showArrowHead: false,
+
+  //! Test for DATE ----------------------------------------------------------
+  createdAt: [1000000, 1000000000],
+  //! ------------------------------------------------------------------------
 };
 
 function addAlpha(color, opacity) {
@@ -53,6 +57,13 @@ function computeParticleSpeedForLink(count, lowerBound, upperBound, min, max) {
   const normalizedCount = (count - min) / max;
   return lowerBound + normalizedCount * (upperBound - lowerBound);
 }
+
+//! Test for DATE ----------------------------------------------------------
+function computeDateForLink(count, lowerBound, upperBound, min, max) {
+  const normalizedCount = (count - min) / max;
+  return lowerBound + normalizedCount * (upperBound - lowerBound);
+}
+//! ------------------------------------------------------------------------
 
 function isNodeNeighbourWithinSet(node, nodesSet) {
   const outLinks = Object.values(node.outLinks);
@@ -108,6 +119,7 @@ export default function Neo4jGraphDisplay() {
 
   const query = `MATCH p=()-[r:TO]->() RETURN p;`;
   const { loading, records } = useReadCypher(query);
+
   const gData = useMemo(() => {
     const nodes = {};
     const links = {};
@@ -115,10 +127,12 @@ export default function Neo4jGraphDisplay() {
       min: 0,
       max: 1,
     };
+
     if (!loading && records) {
       records.forEach((linkData) => {
-        const link = linkData.get(0).segments[0];
 
+        const link = linkData.get(0).segments[0];
+        // console.log(link);
         // Initializing and adding nodes to set
         const nodeStartId = addNodeToSet(link.start, nodes);
         const nodeEndId = addNodeToSet(link.end, nodes);
@@ -126,14 +140,25 @@ export default function Neo4jGraphDisplay() {
         // Initializing and adding links to set
         const identity = link.relationship.identity.toNumber();
         const createdAt = link.relationship.properties.created_at;
-        console.log(createdAt)
+
+        // console.log(createdAt.nanosecond.low)
+
+        // const currentLink = {
+        //   identity: identity,
+        //   type: link.relationship.type,
+        //   createdAt: createdAt,
+        //   source: nodes[link.start.identity.toNumber()],
+        //   target: nodes[link.end.identity.toNumber()],
+        // }
+
         const currentLink = {
           identity: identity,
           type: link.relationship.type,
-          createdAt: createdAt,
+          createdAt: DEFAULT_GRAPH_PARAMETERS.createdAt,
           source: nodes[link.start.identity.toNumber()],
           target: nodes[link.end.identity.toNumber()],
         }
+
         const wrapLink = {
           source: nodes[link.start.identity.toNumber()],
           target: nodes[link.end.identity.toNumber()],
@@ -191,6 +216,7 @@ export default function Neo4jGraphDisplay() {
       utils: { countBoundRange: countBoundRange },
     };
   }, [loading, records]);
+  // console.log(gData);
   const nodeCanvasDraw = useCallback(
     (node, ctx, globalScale) => {
       const label = node.properties.ip;
@@ -233,6 +259,7 @@ export default function Neo4jGraphDisplay() {
     },
     [graphParameters.exteriorNodeOpacity, selectedNodes]
   );
+
   const nodePointerAreaPaint = useCallback((node, color, ctx) => {
     ctx.fillStyle = color;
     const bckgDimensions = node.__bckgDimensions;
@@ -243,6 +270,7 @@ export default function Neo4jGraphDisplay() {
         ...bckgDimensions
       );
   }, []);
+
   const selectNode = useCallback((node) => {
     setSelectedNodes((prev) => {
       const newList = { ...prev };
@@ -268,6 +296,7 @@ export default function Neo4jGraphDisplay() {
       return newList;
     });
   }, []);
+
   const unselectNode = useCallback(
     (node) => {
       setSelectedNodes((prev) => {
@@ -302,6 +331,7 @@ export default function Neo4jGraphDisplay() {
     },
     [selectedNodes]
   );
+
   const nodeOnClick = useCallback(
     (node, event) => {
       if (selectedNodes[node.identity]) {
@@ -312,6 +342,7 @@ export default function Neo4jGraphDisplay() {
     },
     [selectedNodes, unselectNode, selectNode]
   );
+
   const linkOnClick = useCallback(
     (link, event) => {
       setSelectedLinks((prev) => {
@@ -336,12 +367,14 @@ export default function Neo4jGraphDisplay() {
     },
     [selectedNodes, unselectNode]
   );
+
   useEffect(() => {
     setCanvasSize({
       width: containerRef.current.clientWidth,
       height: containerRef.current.clientHeight,
     });
   }, []);
+  
   return loading ? null : (
     <Box
       component="div"
@@ -429,6 +462,38 @@ export default function Neo4jGraphDisplay() {
               }}
             />
           </Box>
+
+          {/* //! Test for DATE ---------------------------------------------------------- */}
+          <Box>
+            <Typography>Date</Typography>
+            <Slider
+              value={graphParameters.createdAt}
+              step={1000000}
+              min={1000000}
+              max={1000000000}
+              valueLabelDisplay="auto"
+              onChange={(event, newValue) => {
+                console.log(newValue);
+                setGraphParameters((prev) => ({
+                  ...prev,
+                  createdAt: newValue,
+                }));
+                const [lower, upper] = newValue;
+                const { min, max } = gData.utils.countBoundRange;
+                gData.links.forEach((link) => {
+                  link.createdAt = computeDateForLink(
+                    link.count,
+                    lower,
+                    upper,
+                    min,
+                    max
+                  );
+                });
+              }}
+            />
+          </Box>
+          {/* //! ------------------------------------------------------------------------ */}
+
           <FormControlLabel
             sx={{ justifyContent: "center" }}
             onChange={(event, newValue) => {
