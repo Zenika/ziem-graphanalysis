@@ -23,10 +23,6 @@ const DEFAULT_GRAPH_PARAMETERS = {
   particleSpeedRange: [0.005, 0.03],
   exteriorNodeOpacity: 0.2,
   showArrowHead: false,
-
-  //! Test for DATE ----------------------------------------------------------
-  createdAt: [1000000, 1000000000],
-  //! ------------------------------------------------------------------------
 };
 
 function addAlpha(color, opacity) {
@@ -57,13 +53,6 @@ function computeParticleSpeedForLink(count, lowerBound, upperBound, min, max) {
   const normalizedCount = (count - min) / max;
   return lowerBound + normalizedCount * (upperBound - lowerBound);
 }
-
-//! Test for DATE ----------------------------------------------------------
-function computeDateForLink(count, lowerBound, upperBound, min, max) {
-  const normalizedCount = (count - min) / max;
-  return lowerBound + normalizedCount * (upperBound - lowerBound);
-}
-//! ------------------------------------------------------------------------
 
 function isNodeNeighbourWithinSet(node, nodesSet) {
   const outLinks = Object.values(node.outLinks);
@@ -462,37 +451,6 @@ export default function Neo4jGraphDisplay() {
               }}
             />
           </Box>
-
-          {/* //! Test for DATE ---------------------------------------------------------- */}
-          <Box>
-            <Typography>Date</Typography>
-            <Slider
-              value={graphParameters.createdAt}
-              step={1000000}
-              min={1000000}
-              max={1000000000}
-              valueLabelDisplay="auto"
-              onChange={(event, newValue) => {
-                console.log(newValue);
-                setGraphParameters((prev) => ({
-                  ...prev,
-                  createdAt: newValue,
-                }));
-                const [lower, upper] = newValue;
-                const { min, max } = gData.utils.countBoundRange;
-                gData.links.forEach((link) => {
-                  link.createdAt = computeDateForLink(
-                    link.count,
-                    lower,
-                    upper,
-                    min,
-                    max
-                  );
-                });
-              }}
-            />
-          </Box>
-          {/* //! ------------------------------------------------------------------------ */}
 
           <FormControlLabel
             sx={{ justifyContent: "center" }}
