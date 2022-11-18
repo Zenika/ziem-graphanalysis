@@ -4,12 +4,24 @@ import './index.css';
 import App from './components/App';
 import { Provider } from 'react-redux';
 import store from './store';
+import { createDriver, Neo4jProvider } from 'use-neo4j';
+import db from './config.json';
 
+const driver = createDriver(
+  'neo4j',
+  'localhost',
+  7687,
+  db.NEO4J_CLIENT_ID,
+  db.NEO4J_CLIENT_PWD
+  );
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Neo4jProvider driver={driver}>
+        <App />
+      </Neo4jProvider>
     </Provider>
   </React.StrictMode>
 );

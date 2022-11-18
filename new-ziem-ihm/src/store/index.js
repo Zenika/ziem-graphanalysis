@@ -1,9 +1,9 @@
 
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import { legacy_createStore as createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from '../reducers';
 
-const composeEnhancers = composeWithDevTools({});
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const enhancers = composeEnhancers(
   applyMiddleware(
   ),
