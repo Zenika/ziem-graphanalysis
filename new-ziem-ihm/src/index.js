@@ -7,6 +7,7 @@ import store from './store';
 import { createDriver, Neo4jProvider } from 'use-neo4j';
 import db from './config.json';
 
+// driver to connect our database neo4j to the neo4jprovider
 const driver = createDriver(
   'neo4j',
   'localhost',

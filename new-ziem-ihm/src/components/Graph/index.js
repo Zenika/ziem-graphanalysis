@@ -1,28 +1,33 @@
 
 import { CircularProgress, Stack } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useReadCypher } from 'use-neo4j';
-import graph from '../../assets/images/graph.png';
+import { saveNeo4jDatas } from '../../actions/neo4jDatas';
+
+// import graph from '../../assets/images/graph.png';
 
 function Graph() {
     const dispatch = useDispatch();
-    // eslint-disable-next-line quotes
-    const query = `MATCH p=()-[r:TO]->() RETURN p;`;
+    const query = 'MATCH p=()-[r:TO]->() RETURN p;';
     const {loading, records} = useReadCypher(query);
+    
+    if(!loading && records != undefined) {
+        dispatch(saveNeo4jDatas(records));
+    }
 
-    // if (!loading && records != undefined) {
-    //     console.log(loading, records);
-    //     dispatch(records);
-    // }
-
+    // const {datas} = useSelector((state) => state.neo4jDatas);
+    // useEffect(() => {
+    //     console.log(datas);
+    // }, []);
 
     return (
-        loading ?
+ 
         <Stack width='75%' flex justifyContent='center' alignItems='center' >
             <CircularProgress size='300px' />
         </Stack>
-        :
-        <img src={graph} alt="graph" />
+        
+        // <img src={graph} alt="graph" />
     );
 }
 

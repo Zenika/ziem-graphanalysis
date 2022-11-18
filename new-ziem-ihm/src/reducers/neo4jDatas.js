@@ -1,4 +1,4 @@
-import { SAVE_NEO4J_DATAS } from '../actions/graphDatas';
+import { SAVE_NEO4J_DATAS } from '../actions/neo4jDatas';
 
 
   
@@ -11,7 +11,7 @@ import { SAVE_NEO4J_DATAS } from '../actions/graphDatas';
         case SAVE_NEO4J_DATAS:
           return {
             ...state,
-            value: action.value,
+            datas: action.value,
           };
         
       default:
