@@ -13,7 +13,8 @@ function Settings() {
       spacing={2}
       sx={{ padding: '40px' }}
     >
-      <Box>
+      <Typography>Settings Menu</Typography>
+      {/* <Box>
         <Typography>Curvature</Typography>
         <Slider
           step={0.05}
@@ -45,7 +46,7 @@ function Settings() {
         sx={{ justifyContent: 'center' }}
         control={<Switch />}
         label="Show Arrow Head"
-      />
+      /> */}
     </Stack>
     );
 }

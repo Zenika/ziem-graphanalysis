@@ -1,33 +1,55 @@
 
 import { CircularProgress, Stack } from '@mui/material';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useReadCypher } from 'use-neo4j';
-import { saveNeo4jDatas } from '../../actions/neo4jDatas';
-
-// import graph from '../../assets/images/graph.png';
+import { useRef } from 'react';
+import ReactForceGraph2d from 'react-force-graph-2d';
+import { useSelector } from 'react-redux';
 
 function Graph() {
-    const dispatch = useDispatch();
-    const query = 'MATCH p=()-[r:TO]->() RETURN p;';
-    const {loading, records} = useReadCypher(query);
-    
-    if(!loading && records != undefined) {
-        dispatch(saveNeo4jDatas(records));
-    }
 
-    // const {datas} = useSelector((state) => state.neo4jDatas);
-    // useEffect(() => {
-    //     console.log(datas);
-    // }, []);
+    const {
+        graphParameters,
+        gDatas,
+        graphIsReady
+    } = useSelector((state) => state.graphDatas);
+    console.log(gDatas);
+
+    const graphRef = useRef();
 
     return (
- 
         <Stack width='75%' flex justifyContent='center' alignItems='center' >
-            <CircularProgress size='300px' />
+            {
+                graphIsReady
+                ?
+                    <ReactForceGraph2d 
+                    ref={graphRef}
+                    height={canvasSize.height}
+                    width={canvasSize.width}
+                    graphData={gDatas}
+                    nodeLabel="identity"
+                    nodeAutoColorBy="identity"
+                    linkCurvature={graphParameters.curvature}
+                    linkWidth={(link) => (selectedLinks[link.identity] ? 4 : 1)}
+                    linkDirectionalParticles={2}
+                    linkDirectionalParticleSpeed={(d) => d.particleSpeed}
+                    linkDirectionalParticleWidth={(link) =>
+                      !Object.values(selectedLinks).length || selectedLinks[link.identity]
+                        ? 2
+                        : 0
+                    }
+                    linkDirectionalArrowRelPos={1}
+                    linkDirectionalArrowLength={graphParameters.showArrowHead ? 3 : 0}
+                    linkLabel="count"
+                    onLinkClick={linkOnClick}
+                    onNodeClick={nodeOnClick}
+                    onNodeRightClick={(node, event) => console.log("ayayaa right click")}
+                    nodeCanvasObject={nodeCanvasDraw}
+                    nodePointerAreaPaint={nodePointerAreaPaint}
+                    />
+                :
+                    <CircularProgress size='300px' />
+            }
         </Stack>
-        
-        // <img src={graph} alt="graph" />
+
     );
 }
 
