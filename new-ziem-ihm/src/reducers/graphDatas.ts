@@ -1,8 +1,7 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { GRAPH_IS_READY, SAVE_GRAPH_DATAS } from '../actions/graphDatas';
+import { GraphDatas } from '../models/GraphDatas';
 
-
-
-  
   export const initialState = {
     graphParameters: {
         curvature: 0.2,
@@ -17,18 +16,18 @@ import { GRAPH_IS_READY, SAVE_GRAPH_DATAS } from '../actions/graphDatas';
     graphIsReady : false,
   };
   
-  const reducer = (state = initialState, action = {}) => {
+  const reducer = (state = initialState, action: PayloadAction<GraphDatas>) => {
     switch (action.type) {
         case SAVE_GRAPH_DATAS:
           return {
             ...state,
-            gDatas: action.value,
+            gDatas: action.payload,
           };
 
         case GRAPH_IS_READY:
           return {
             ...state,
-            graphIsReady : action.graphIsReady
+            graphIsReady : action.payload
           };
         
       default:

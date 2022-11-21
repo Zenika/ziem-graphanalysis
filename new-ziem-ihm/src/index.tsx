@@ -15,7 +15,7 @@ const driver = createDriver(
   db.NEO4J_CLIENT_ID,
   db.NEO4J_CLIENT_PWD
   );
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>

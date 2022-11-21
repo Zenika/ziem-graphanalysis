@@ -1,5 +1,7 @@
+import { GraphParameters } from "../models/GraphParameters";
+import { Records } from "../models/Records";
 
-export default function neo4jDatasParsing(records, graphParameters) {
+export default function neo4jDatasParsing(records: Records, graphParameters: GraphParameters) {
 
     function neo4jNodeToReactNode(node, id) {
         return {

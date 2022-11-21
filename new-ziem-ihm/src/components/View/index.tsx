@@ -13,7 +13,7 @@ function Settings() {
         sx={{ padding: '40px' }}
       >
         <Typography>View Menu</Typography>
-        {/* <Box
+        <Box
           sx={{
             overflow: 'auto',
             maxHeight: '350px',
@@ -21,9 +21,9 @@ function Settings() {
         >
           <Typography>Selected Nodes</Typography>
           <List>
-            {Object.values(selectedNodes).map((node) => (
+            {/* {Object.values(selectedNodes).map((node) => (
               <NodeListItem node={node} key={node.identity} />
-            ))}
+            ))} */}
           </List>
         </Box>
         <Button variant="contained">
@@ -40,11 +40,11 @@ function Settings() {
         >
           <Typography>Selected Links</Typography>
           <List>
-            {Object.values(selectedLinks).map((link) => (
+            {/* {Object.values(selectedLinks).map((link) => (
               <LinkListItem key={link.identity} link={link} />
-            ))}
+            ))} */}
           </List>
-        </Box> */}
+        </Box>
       </Stack>
     );
 }

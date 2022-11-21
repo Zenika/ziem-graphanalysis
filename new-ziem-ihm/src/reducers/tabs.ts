@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { CHANGE_TABS_VALUE } from '../actions/tabs';
 
   
@@ -5,12 +6,12 @@ import { CHANGE_TABS_VALUE } from '../actions/tabs';
     tabsValue: '1'
   };
   
-  const reducer = (state = initialState, action = {}) => {
+  const reducer = (state = initialState, action: PayloadAction<boolean>) => {
     switch (action.type) {
         case CHANGE_TABS_VALUE:
           return {
             ...state,
-            tabsValue: action.value,
+            tabsValue: action.payload,
           };
         
       default:
