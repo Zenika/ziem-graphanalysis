@@ -1,9 +1,18 @@
-import { GraphParameters } from "../models/GraphParameters";
-import { Records } from "../models/Records";
+import { GraphParameters } from '../models/GraphParameters';
+import { Records } from '../models/Records';
+import { Set } from '../models/Set';
 
 export default function neo4jDatasParsing(records: Records, graphParameters: GraphParameters) {
+    interface node {
+        identity: {
+            high: number,
+            low: number
+        },
+        labels: string[],
+        properties: {ip: string}
+    }
 
-    function neo4jNodeToReactNode(node, id) {
+    function neo4jNodeToReactNode(node: node, id: number) {
         return {
         identity: id,
         outLinks: {},
@@ -13,21 +22,22 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
         };
     }
 
-    function addNodeToSet(node, set) {
-        const identity = node.identity.toNumber();
+    function addNodeToSet(node: node, set: Set) {
+        const identity = node.identity;
         if (!set[identity]) {
         set[identity] = neo4jNodeToReactNode(node, identity);
         }
         return identity;
     }
 
-    function computeParticleSpeedForLink(count, lowerBound, upperBound, min, max) {
+    function computeParticleSpeedForLink(count: number, lowerBound: number, upperBound: number, min: number, max: number) {
+        
     const normalizedCount = (count - min) / max;
     return lowerBound + normalizedCount * (upperBound - lowerBound);
     }
 
 
-        const nodes = {};
+        let nodes: Set;
         const links = {};
         const countBoundRange = {
             min: 0,
@@ -38,24 +48,13 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
             records.forEach((linkData) => {
 
             const link = linkData.get(0).segments[0];
-            // console.log(link);
+
             // Initializing and adding nodes to set
             const nodeStartId = addNodeToSet(link.start, nodes);
             const nodeEndId = addNodeToSet(link.end, nodes);
 
             // Initializing and adding links to set
             const identity = link.relationship.identity.toNumber();
-            // const createdAt = link.relationship.properties.created_at;
-
-            // console.log(createdAt.nanosecond.low)
-
-            // const currentLink = {
-            //   identity: identity,
-            //   type: link.relationship.type,
-            //   createdAt: createdAt,
-            //   source: nodes[link.start.identity.toNumber()],
-            //   target: nodes[link.end.identity.toNumber()],
-            // }
 
             const currentLink = {
                 identity: identity,
@@ -64,6 +63,7 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
                 source: nodes[link.start.identity.toNumber()],
                 target: nodes[link.end.identity.toNumber()],
             };
+            
 
             const wrapLink = {
                 source: nodes[link.start.identity.toNumber()],

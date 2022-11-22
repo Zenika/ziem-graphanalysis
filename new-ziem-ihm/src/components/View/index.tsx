@@ -26,10 +26,10 @@ function Settings() {
             ))} */}
           </List>
         </Box>
-        <Button variant="contained">
+        <Button variant='contained'>
           Clear Selection
         </Button>
-        <Button variant="contained">
+        <Button variant='contained'>
           Focus on
         </Button>
         <Box

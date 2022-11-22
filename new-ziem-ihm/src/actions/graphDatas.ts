@@ -1,4 +1,4 @@
-import { GraphDatas } from "../models/GraphDatas";
+import { GraphDatas } from '../models/GraphDatas';
 
 export const PARSE_NEO4J_DATAS_TO_GRAPH = 'PARSE_NEO4J_DATAS_TO_GRAPH';
 export const SAVE_GRAPH_DATAS = 'SAVE_GRAPH_DATAS';

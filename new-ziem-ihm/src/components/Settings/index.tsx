@@ -20,7 +20,7 @@ function Settings() {
           step={0.05}
           min={0}
           max={1}
-          valueLabelDisplay="auto"
+          valueLabelDisplay='auto'
         />
       </Box>
       <Box>
@@ -29,7 +29,7 @@ function Settings() {
           step={0.05}
           min={0.05}
           max={1}
-          valueLabelDisplay="auto"
+          valueLabelDisplay='auto'
         />
       </Box>
       <Box>
@@ -38,14 +38,14 @@ function Settings() {
           step={0.001}
           min={0.001}
           max={0.05}
-          valueLabelDisplay="auto"
+          valueLabelDisplay='auto'
         />
       </Box>
 
       <FormControlLabel
         sx={{ justifyContent: 'center' }}
         control={<Switch />}
-        label="Show Arrow Head"
+        label='Show Arrow Head'
       />
     </Stack>
     );

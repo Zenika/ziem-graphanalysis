@@ -22,8 +22,6 @@ function App() {
   useEffect(() => {
     if(!loading && records != undefined && records.length > 10) {
       const gDatas: GraphDatas = neo4jDatasParsing(records, graphParameters);
-      console.log(records)
-      
       
       dispatch(saveGraphDatas(gDatas));
       dispatch(graphIsReady());

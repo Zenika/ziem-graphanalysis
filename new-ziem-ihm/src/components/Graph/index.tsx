@@ -8,11 +8,11 @@ import { RootState } from '../../store';
 function Graph() {
 
     const {
-        graphParameters,
+        // graphParameters,
         gDatas,
         graphIsReady
     } = useSelector((state: RootState) => state.graphDatas);
-    // console.log(gDatas);
+
 
     const graphRef = useRef();
 

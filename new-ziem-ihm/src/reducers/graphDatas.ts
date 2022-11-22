@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { GRAPH_IS_READY, SAVE_GRAPH_DATAS } from '../actions/graphDatas';
 import { GraphDatas } from '../models/GraphDatas';
 
+
   export const initialState = {
     graphParameters: {
         curvature: 0.2,

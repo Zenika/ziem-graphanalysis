@@ -6,7 +6,7 @@ import View from '../View';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTabsValue } from '../../actions/tabs';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { RootState } from '../../store';
+
 
 function LeftPanel() {
     const dispatch = useDispatch();
@@ -38,9 +38,9 @@ function LeftPanel() {
               // textcolor="inherit"
               // sx={{ backgroundColor: '#43444d' }}
             >
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Setting" icon={<SettingsIcon />} value='1' />
-                <Tab label="View" icon={<Search />} value='2' />
+              <TabList onChange={handleChange} aria-label='lab API tabs example'>
+                <Tab label='Setting' icon={<SettingsIcon />} value='1' />
+                <Tab label='View' icon={<Search />} value='2' />
               </TabList>
             </Box>
             <TabPanel value='1'><Settings /></TabPanel>
