@@ -13,13 +13,21 @@ function Graph() {
         graphIsReady
     } = useSelector((state: RootState) => state.graphDatas);
 
+    //* ajout de graphParameters ici au lieu du reducer (state) pour tester
+    //TODO remettre le graphparameters dans le reducer, probleme de typage never.
+    const graphParameters = {
+        curvature: 0.2,
+        particleSpeedRange: [0.005, 0.03],
+        exteriorNodeOpacity: 0.2,
+        showArrowHead: false,
+      };
 
     const graphRef = useRef();
 
     return (
         <Stack
             width='75%'
-            // flex={true}
+            // flex
             justifyContent='center'
             alignItems='center'
         >
@@ -33,7 +41,7 @@ function Graph() {
                     graphData={gDatas}
                     nodeLabel="identity"
                     nodeAutoColorBy="identity"
-                    // linkCurvature={graphParameters.curvature}
+                    linkCurvature={graphParameters.curvature}
                     // linkWidth={(link) => (selectedLinks[link.identity] ? 4 : 1)}
                     linkDirectionalParticles={2}
                     linkDirectionalParticleSpeed={(d: any) => d.particleSpeed}
@@ -43,7 +51,7 @@ function Graph() {
                     //     : 0
                     // }
                     linkDirectionalArrowRelPos={1}
-                    // linkDirectionalArrowLength={graphParameters.showArrowHead ? 3 : 0}
+                    linkDirectionalArrowLength={graphParameters.showArrowHead ? 3 : 0}
                     linkLabel="count"
                     // onLinkClick={linkOnClick}
                     // onNodeClick={nodeOnClick}

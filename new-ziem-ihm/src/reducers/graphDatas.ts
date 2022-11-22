@@ -4,12 +4,12 @@ import { GraphDatas } from '../models/GraphDatas';
 
 
   export const initialState = {
-    graphParameters: {
-        curvature: 0.2,
-        particleSpeedRange: [0.005, 0.03],
-        exteriorNodeOpacity: 0.2,
-        showArrowHead: false,
-      },
+    // graphParameters: {
+    //     curvature: 0.2,
+    //     particleSpeedRange: [0.005, 0.03],
+    //     exteriorNodeOpacity: 0.2,
+    //     showArrowHead: false,
+    //   },
     
     gDatas: 
     {},

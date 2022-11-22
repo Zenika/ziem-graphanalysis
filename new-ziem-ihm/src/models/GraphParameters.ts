@@ -3,5 +3,5 @@ export interface GraphParameters {
     particleSpeedRange: number[];
     exteriorNodeOpacity: number;
     showArrowHead: boolean;
-    // createdAt? : number,
+    createdAt? : number,
 }

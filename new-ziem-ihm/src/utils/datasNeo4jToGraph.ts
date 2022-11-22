@@ -12,7 +12,7 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
         properties: {ip: string}
     }
 
-    function neo4jNodeToReactNode(node: node, id: number) {
+    function neo4jNodeToReactNode(node: node, id: {high: number, low: number}) {
         return {
         identity: id,
         outLinks: {},
@@ -23,9 +23,10 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
     }
 
     function addNodeToSet(node: node, set: Set) {
+        // console.log(node);
         const identity = node.identity;
-        if (!set[identity]) {
-        set[identity] = neo4jNodeToReactNode(node, identity);
+        if (!set.identity) {
+        set.identity = neo4jNodeToReactNode(node, identity);
         }
         return identity;
     }
@@ -45,13 +46,17 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
         };
 
         if (records) {
-            records.forEach((linkData) => {
-
+            records.forEach((linkData: Records) => {
+            // console.log(linkData);
             const link = linkData.get(0).segments[0];
+            // console.log(link);
+            
 
             // Initializing and adding nodes to set
             const nodeStartId = addNodeToSet(link.start, nodes);
             const nodeEndId = addNodeToSet(link.end, nodes);
+            console.log(nodeStartId, nodeEndId);
+            
 
             // Initializing and adding links to set
             const identity = link.relationship.identity.toNumber();
@@ -90,6 +95,8 @@ export default function neo4jDatasParsing(records: Records, graphParameters: Gra
 
             Object.values(nodes).forEach((node) => {
             Object.values(node.outLinks).forEach((link) => {
+                console.log(link);
+                
                 if (link.count > countBoundRange.max) {
                 countBoundRange.max = link.count;
                 } else if (link.count < countBoundRange.min) {

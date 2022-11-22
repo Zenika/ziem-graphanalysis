@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useReadCypher } from 'use-neo4j';
 import { graphIsReady, saveGraphDatas } from '../../actions/graphDatas';
 import { GraphDatas } from '../../models/GraphDatas';
+import { Records } from '../../models/Records';
 import { RootState } from '../../store';
 import neo4jDatasParsing from '../../utils/datasNeo4jToGraph';
 import Graph from '../Graph';
@@ -17,7 +18,8 @@ function App() {
   const dispatch = useDispatch();
   const { graphParameters } = useSelector((state: RootState) => state.graphDatas);
   const query = 'MATCH p=()-[r:TO]->() RETURN p;';
-  const {loading, records } = useReadCypher(query);
+  // const {loading, records } = useReadCypher(query);
+  const records: Record<Dict<PropertyKey, any>, PropertyKey, Dict<string, number>>[] | undefined = useReadCypher(query).records;
 
   useEffect(() => {
     if(!loading && records != undefined && records.length > 10) {
