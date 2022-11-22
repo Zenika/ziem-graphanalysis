@@ -18,8 +18,7 @@ function App() {
   const dispatch = useDispatch();
   const { graphParameters } = useSelector((state: RootState) => state.graphDatas);
   const query = 'MATCH p=()-[r:TO]->() RETURN p;';
-  // const {loading, records } = useReadCypher(query);
-  const records: Record<Dict<PropertyKey, any>, PropertyKey, Dict<string, number>>[] | undefined = useReadCypher(query).records;
+  const {loading, records } = useReadCypher(query);
 
   useEffect(() => {
     if(!loading && records != undefined && records.length > 10) {

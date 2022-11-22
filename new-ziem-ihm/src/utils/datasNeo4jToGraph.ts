@@ -2,7 +2,7 @@ import { GraphParameters } from '../models/GraphParameters';
 import { Records } from '../models/Records';
 import { Set } from '../models/Set';
 
-export default function neo4jDatasParsing(records: Records, graphParameters: GraphParameters) {
+export default function neo4jDatasParsing(records: Record<string, any>, graphParameters: GraphParameters) {
     interface node {
         identity: {
             high: number,
