@@ -1,5 +1,0 @@
-{
-  "NEO4J_SERVER_URL": "bolt://localhost:7687",
-  "NEO4J_CLIENT_ID": "julien",
-  "NEO4J_CLIENT_PWD": "ziem"
-}

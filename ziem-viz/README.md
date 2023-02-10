@@ -2,13 +2,22 @@
 
 ## Creating a neo4j database and a user.
 
-You need to run a Neo4j bolt database on the default url localhost:7687. Then configure a file src/config.json with the fields :
+Configure database connection in `.env` file, for a local instance:
 
-{  
-  "NEO4J_SERVER_URL": "bolt://localhost:7687",  
-  "NEO4J_CLIENT_ID": "yourUserId",   
-  "NEO4J_CLIENT_PWD": "yourUserPwd"  
-}
+```
+REACT_APP_NEO4J_HOSTNAME=localhost
+REACT_APP_NEO4J_PORT=7687
+REACT_APP_NEO4J_CLIENT_ID=neo4j
+REACT_APP_NEO4J_CLIENT_PWD=supersecretpassword
+```
+
+For a remote instance:
+```
+REACT_APP_NEO4J_HOSTNAME=neo4j.detection.x.x.x.x.nip.io
+REACT_APP_NEO4J_PORT=7687
+REACT_APP_NEO4J_CLIENT_ID=neo4j
+REACT_APP_NEO4J_CLIENT_PWD=supersecretpassword
+```
 
 This user needs to be able to have the permissions of the publisher role (see neo4j default roles).
 
