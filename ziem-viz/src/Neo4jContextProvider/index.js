@@ -1,13 +1,12 @@
 import { Neo4jProvider, createDriver } from "use-neo4j";
-import configData from "../config.json";
 import { Neo4jContext } from "../Neo4jContext";
 
 const driver = createDriver(
   "neo4j",
-  "localhost",
-  7687,
-  configData.NEO4J_CLIENT_ID,
-  configData.NEO4J_CLIENT_PWD
+  process.env.REACT_APP_NEO4J_HOSTNAME,
+  process.env.REACT_APP_NEO4J_PORT,
+  process.env.REACT_APP_NEO4J_CLIENT_ID,
+  process.env.REACT_APP_NEO4J_CLIENT_PWD
 );
 
 export default function Neo4jContextProvider({ children }) {
